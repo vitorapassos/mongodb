@@ -95,21 +95,7 @@ const buscarCliente = async (nome) => {
             //console.log(melhorCliente)
 
             console.log(clienteFormatado)
-        } //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-        //o espirito do murilo pasou por aqui
-
-
-
+        }
         //console.log(cliente)
     } catch (error) {
         console.log(error)
@@ -117,6 +103,56 @@ const buscarCliente = async (nome) => {
 
 }
 
+// CRUD Update - Função para alterar os dados de um cliente
+// ATENÇÃO!!!! Obrigatoriamente o update precisa ser feito com base no ID
+
+const atualizarCliente = async (id, nomeCli, foneCli, cpfCli) => {
+    try {
+        const cliente = await clienteModel.findByIdAndUpdate(
+            id,
+            {
+                nomeCliente: nomeCli,
+                foneCliente: foneCli,
+                cpfCliente: cpfCli
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        )
+        if (!cliente) {
+            console.log("Cliente não encontrado")
+        } else {
+            console.log("Dados do clinte alterados com sucesso")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//=========================================================
+
+// CRUD Delete - Função para excluir um cliente
+// ATENÇÃO !!! - Obrigatoriamente a exclusão ´feita pelo ID
+const deletarCliente = async (id) => {
+    try {
+        // a linha abaixo exclui o client do banco de dados
+        const cliente = await clienteModel.findByIdAndDelete(id)
+
+        // validação
+        if(!cliente){
+            console.log("Cliente não encontrado")
+        }else{
+            console.log("Cliente deletado com sucesso")
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//=========================================================
 
 
 // execução da aplicação
@@ -133,7 +169,10 @@ const app = async () => {
     //await listarClientes()
 
     // CRUD - Read (Exemplo 2 - buscar Clientes)
-    await buscarCliente("Vitor de Assis")
+    //await buscarCliente("Vitor de Assis")
+    //await atualizarCliente('67b90410f200a28a59dc2c7d', 'Vitor de Assis Passos', '(11) 9 4708-4137', '47957011803')
+    //await buscarCliente("Vitor de Assis")
+    await deletarCliente('67b90410f200a28a59dc2c7a')
 
     await desconectar()
 
